@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-# This file uses NLP tools to get the outcome variables needed for running regressions
+# This file uses NLP tools to get the outcome variables needed to replicate the results of this paper
 import pandas as pd
 import numpy as np
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import textstat
 from better_profanity import profanity
 
-
+"""
+This function takes in a CBSA-day of Tweets, breaks the CBSA-day into individual Tweets, and gathers the outcome
+variables. It collects the number of Tweets in the observation, then returns the sentiment measures, grade level,
+curse percentage, and an array containing all individual scores for within that CBSA-day, along with the number
+of Tweets.
+"""
 def get_tweet_summary_statistics(tweets):
 
     # split into individual tweets
@@ -42,18 +47,18 @@ def get_tweet_summary_statistics(tweets):
     
     return (num_tweets, day_compound, day_neg, day_curse, day_grade, grades, scores, curses)
 
-# Gets VADER sentiment measures
+# Helper Function: Gets VADER sentiment measures
 def get_compound(sentence):
     sid = SentimentIntensityAnalyzer()
     ss = sid.polarity_scores(sentence)
     return (ss.get('compound'), ss.get('neg'), ss.get('pos'))
 
-# Determines if a tweet has a curse word
+# Helper Function: Determines if a tweet has a curse word
 def get_curse_word(sentence):
     if profanity.contains_profanity(sentence):
         return 1
     return 0
 
-# Gets flesch-kincaid grade level
+# Helper Function: Gets flesch-kincaid grade level
 def get_grade_level(sentence):
     return textstat.flesch_kincaid_grade(sentence)
