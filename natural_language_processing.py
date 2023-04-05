@@ -115,4 +115,4 @@ if __name__ == '__main__':
     location_day_data = dd.from_pandas(location_day_data, npartitions=32)
     location_day_data['results'] = location_day_data['tweets'].apply(get_tweet_topic, model=model, sent_model=sent_model)
 
-    location_day_data.to_csv('./dataset.csv')
+    location_day_data.to_csv('./topics.csv')
