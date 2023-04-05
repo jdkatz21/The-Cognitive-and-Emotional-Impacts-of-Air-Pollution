@@ -100,11 +100,10 @@ def get_grade_level(sentence):
 # loads data
 if __name__ == '__main__':
 
-    os.chdir('/Users/jaredkatz/Desktop/Honors Thesis/Honors Paper')
     ProgressBar().register()
 
 
-    location_day_data = pd.read_csv('./data/feb_draft/full_dataset_by_day_with_pollution.csv', names=['index', 'date', 'coordinates', 'tweets', 'avg_pm25', 'avg_aqi'])
+    location_day_data = pd.read_csv('./dataset.csv', names=['index', 'date', 'coordinates', 'tweets', 'avg_pm25', 'avg_aqi'])
     location_day_data = location_day_data.dropna()
     print(location_day_data)
     location_day_data.reset_index()
@@ -113,7 +112,7 @@ if __name__ == '__main__':
     model = tweetnlp.load_model('topic_classification')
     sent_model = tweetnlp.load_model('sentiment')
 
-    location_day_data = dd.from_pandas(location_day_data, npartitions=8)
+    location_day_data = dd.from_pandas(location_day_data, npartitions=32)
     location_day_data['results'] = location_day_data['tweets'].apply(get_tweet_topic, model=model, sent_model=sent_model)
 
-    location_day_data.to_csv('./data/feb_draft/topics.csv')
+    location_day_data.to_csv('./dataset.csv')
