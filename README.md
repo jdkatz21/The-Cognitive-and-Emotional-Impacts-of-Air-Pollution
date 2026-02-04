@@ -3,4 +3,3 @@ This is the associated code and paper for my honors thesis, titled: "The Emotion
 
 Contact Information:
 email: jareddeankatz@gmail.com
-cell: (609)619-1771
